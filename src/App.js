@@ -1,12 +1,31 @@
 import "./App.css";
 import Movie from "./components/movies";
+import NavBar from "./components/navbar";
+import { Route, Switch, Redirect } from "react-router-dom";
+import NotFound from "./components/notfound";
+import Rentals from "./components/rentals";
+import Customers from "./components/customers";
+import React from "react";
+import MovieForm from "./components/movieForm";
 
 function App() {
   return (
-    <main className="container">
-      <h1> Vidly </h1>
-      <Movie />
-    </main>
+    <React.Fragment>
+      <NavBar />
+      <main className="container">
+        <div className="container">
+          <Switch>
+            <Route path="/movies/:id" component={MovieForm} />
+            <Route path="/movies" component={Movie} />
+            <Route path="/customers" component={Customers} />
+            <Route path="/rentals" component={Rentals} />
+            <Redirect from="/" exact to="/movies" />
+            <Route path="/not-found" component={NotFound} />
+            <Redirect to="/not-found" />
+          </Switch>
+        </div>
+      </main>
+    </React.Fragment>
   );
 }
 

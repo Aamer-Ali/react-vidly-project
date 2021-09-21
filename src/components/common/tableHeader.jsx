@@ -29,7 +29,7 @@ class TableHeader extends Component {
         <tr>
           {this.props.columns.map((column) => (
             <th
-              style={{ cursor: "pointer" }}
+              className="clickable"
               key={column.path || column.key}
               scope="col"
               onClick={() => this.raiseSort(column.path)}
