@@ -1,3 +1,5 @@
+import * as genreAPI from "./fakeGenereService";
+
 const movies = [
   {
     _id: "68f7d6s8g6fds8g6ds89gd9g79d87g9d",
@@ -181,4 +183,20 @@ export function getMovies() {
 
 export function getMovie(id) {
   return movies.find((m) => m._id === id);
+}
+
+export function saveMovie(movie) {
+  const movieInDb = movies.find((m) => m._id === movie._id) || {};
+  console.log(movieInDb);
+
+  movieInDb.title = movie.title;
+  movieInDb.genre = genreAPI.genres.find((g) => g._id === movie.genreId);
+  movieInDb.numberInStock = movie.numberInStock;
+  movieInDb.dailyRentalRate = movie.dailyRentalRate;
+
+  if (!movieInDb._id) {
+    movieInDb._id = Date.now().toString();
+    movies.push(movieInDb);
+  }
+  return movieInDb;
 }
