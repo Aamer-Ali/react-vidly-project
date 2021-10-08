@@ -1,7 +1,6 @@
 import "./App.css";
 import Movie from "./components/movies";
 import NavBar from "./components/navbar";
-import jwtDecode from "jwt-decode";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import NotFound from "./components/notfound";
@@ -13,16 +12,14 @@ import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import "react-toastify/dist/ReactToastify.css";
 import Logout from "./components/logout";
+import auth from "./services/authService";
 
 class App extends React.Component {
   state = {};
 
   componentDidMount() {
-    try {
-      const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
-      this.setState({ user });
-    } catch (ex) {}
+    const user = auth.getCurrentUser();
+    this.setState({ user });
   }
 
   render() {
@@ -37,7 +34,13 @@ class App extends React.Component {
               <Route path="/logout" component={Logout} />
               <Route path="/register" component={RegisterForm} />
               <Route path="/movies/:id" component={MovieForm} />
-              <Route path="/movies" component={Movie} />
+              {/* <Route path="/movies" component={Movie} />  */}
+              {/* Want to pass the pops with url the use method below*/}
+              <Route
+                path="/movies"
+                render={(props) => <Movie {...props} user={this.state.user} />}
+              />
+
               <Route path="/customers" component={Customers} />
               <Route path="/rentals" component={Rentals} />
               <Redirect from="/" exact to="/movies" />
@@ -50,6 +53,5 @@ class App extends React.Component {
     );
   }
 }
-
 
 export default App;

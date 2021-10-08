@@ -68,6 +68,8 @@ class Movies extends Component {
   };
 
   render() {
+    const { user } = this.props;
+
     if (this.state.movies.length === 0)
       return <p>There are no Movies for you now</p>;
 
@@ -103,9 +105,11 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link to="/movies/new" className="btn btn-primary">
-            New Movie
-          </Link>
+          {user && (
+            <Link to="/movies/new" className="btn btn-primary">
+              New Movie
+            </Link>
+          )}
           <br />
           <br />
           <p>
