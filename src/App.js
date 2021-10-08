@@ -23,17 +23,25 @@ class App extends React.Component {
   }
 
   render() {
+    const { user } = this.state;
     return (
       <React.Fragment>
         <ToastContainer />
-        <NavBar user={this.state.user} />
+        <NavBar user={user} />
         <main className="container">
           <div className="container">
             <Switch>
               <Route path="/login" component={LoginForm} />
               <Route path="/logout" component={Logout} />
               <Route path="/register" component={RegisterForm} />
-              <Route path="/movies/:id" component={MovieForm} />
+              {/* <Route path="/movies/:id" component={MovieForm} /> */}
+              <Route
+                path="/movies/:id"
+                render={(props) => {
+                  if (!user) return <Redirect to="/login" />;
+                  return <MovieForm {...props} />;
+                }}
+              />
               {/* <Route path="/movies" component={Movie} />  */}
               {/* Want to pass the pops with url the use method below*/}
               <Route
