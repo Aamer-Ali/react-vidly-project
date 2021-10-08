@@ -13,6 +13,7 @@ import RegisterForm from "./components/registerForm";
 import "react-toastify/dist/ReactToastify.css";
 import Logout from "./components/logout";
 import auth from "./services/authService";
+import ProtectedRoute from "./components/common/protectedRoute";
 
 class App extends React.Component {
   state = {};
@@ -35,13 +36,16 @@ class App extends React.Component {
               <Route path="/logout" component={Logout} />
               <Route path="/register" component={RegisterForm} />
               {/* <Route path="/movies/:id" component={MovieForm} /> */}
-              <Route
+              {/* <Route
                 path="/movies/:id"
                 render={(props) => {
                   if (!user) return <Redirect to="/login" />;
                   return <MovieForm {...props} />;
                 }}
-              />
+              /> */}
+              {/* Bellow is generic form of above Route */}
+              <ProtectedRoute path="/movies/:id" component={MovieForm} />
+
               {/* <Route path="/movies" component={Movie} />  */}
               {/* Want to pass the pops with url the use method below*/}
               <Route
